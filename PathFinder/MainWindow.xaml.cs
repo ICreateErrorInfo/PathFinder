@@ -26,7 +26,7 @@ namespace PathFinder {
             var c = new Ellipse {
                 Width  = diameter,
                 Height = diameter,
-                Fill   = Brushes.Black
+                Fill   = Brushes.Black,
             };
 
             c.MouseLeftButtonDown += (o, buttonEventArgs) => {
@@ -37,45 +37,51 @@ namespace PathFinder {
                 Canvas.Children.Remove(me);
             };
 
-            c.MouseRightButtonDown += (o, buttonEventArgs) => {
-
-                var me = (Ellipse) o;
-
-                if (_p1 == null) {
-
-                    _p1 = new Point(Canvas.GetLeft(me) +diameter /2, Canvas.GetTop(me) +diameter /2);
-
-                } else if (_p2 == null) {
-
-                    _p2 = new Point(Canvas.GetLeft(me)+diameter /2, Canvas.GetTop(me) +diameter /2);
-
-                    Line l = new Line {
-                        StrokeThickness = 2,
-                        Stroke          = Brushes.Red,
-                        X1              = _p1.Value.X,
-                        X2              = _p2.Value.X,
-                        Y1              = _p1.Value.Y,
-                        Y2              = _p2.Value.Y
-                    };
-                    Canvas.Children.Add(l);
-
-                    _p1 = null;
-                    _p2 = null;
-
-                }
-
-            };
-
             Canvas.SetLeft(c, pt.X - diameter / 2);
             Canvas.SetTop(c, pt.Y  - diameter / 2);
+            Panel.SetZIndex(c, 10);
 
             _points.Add(pt);
 
             Canvas.Children.Add(c);
+
+            c.MouseRightButtonDown += (o, buttonEventArgs) => {
+
+                var me = (Ellipse) o;
+
+                if (_e1 == null) {
+
+                    _e1      = me;
+                    _e1.Fill = Brushes.Blue;
+
+                } else if (me == _e1) {
+                    _e1.Fill = Brushes.Black;
+                    _e1      = null;
+                } else {
+
+                    var p1 = new Point(Canvas.GetLeft(_e1) + diameter / 2, Canvas.GetTop(_e1) + diameter / 2);
+                    var p2 = new Point(Canvas.GetLeft(me)  + diameter / 2, Canvas.GetTop(me)  + diameter / 2);
+
+                    //new Point(Canvas.GetLeft(me)+diameter /2, Canvas.GetTop(me) +diameter /2)
+                    Line l = new Line {
+                        StrokeThickness = 2,
+                        Stroke          = Brushes.Red,
+                        X1              = p1.X,
+                        X2              = p2.X,
+                        Y1              = p1.Y,
+                        Y2              = p2.Y
+                    };
+                    Canvas.Children.Add(l);
+
+                    _e1.Fill = Brushes.Black;
+                    _e1      = null;
+                }
+
+            };
+
         }
 
-        Point? _p1;
-        Point? _p2;
+        Ellipse _e1;
 
         private void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e) {
 
