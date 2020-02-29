@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Path Finder" Height="600" Width="900">
     <Grid>
-        <Canvas x:Name="Canvas" MouseDown="Canvas_MouseDown"/>
+        <Canvas x:Name="Canvas" Background="White" MouseLeftButtonDown="Canvas_LeftMouseDown" MouseRightButtonDown="Canvas_MouseRightButtonDown" />
 
     </Grid>
 </Window>
