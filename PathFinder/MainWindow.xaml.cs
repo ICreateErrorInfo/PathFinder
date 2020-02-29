@@ -13,21 +13,26 @@ namespace PathFinder {
     public partial class MainWindow: Window {
 
         public MainWindow() {
+
             InitializeComponent();
         }
 
         readonly List<Point> _points = new List<Point>();
+        private Point EndPoint;
+        private Point StartPoint;
 
         private void Canvas_LeftMouseDown(object sender, MouseButtonEventArgs e) {
 
             var pt = e.GetPosition(Canvas);
-
             const double diameter = 10;
+
+
             var c = new Ellipse {
                 Width  = diameter,
                 Height = diameter,
                 Fill   = Brushes.Black,
             };
+
 
             c.MouseLeftButtonDown += (o, buttonEventArgs) => {
                 var me = (Ellipse) o;
@@ -62,7 +67,6 @@ namespace PathFinder {
                     var p1 = new Point(Canvas.GetLeft(_e1) + diameter / 2, Canvas.GetTop(_e1) + diameter / 2);
                     var p2 = new Point(Canvas.GetLeft(me)  + diameter / 2, Canvas.GetTop(me)  + diameter / 2);
 
-                    //new Point(Canvas.GetLeft(me)+diameter /2, Canvas.GetTop(me) +diameter /2)
                     Line l = new Line {
                         StrokeThickness = 2,
                         Stroke          = Brushes.Red,
@@ -83,10 +87,15 @@ namespace PathFinder {
 
         Ellipse _e1;
 
-        private void Canvas_MouseRightButtonDown(object sender, MouseButtonEventArgs e) {
+        private void EndPoint_Click(object sender, RoutedEventArgs e)
+        {
 
         }
 
+        private void StartPoint_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 
 }

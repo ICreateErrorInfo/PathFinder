@@ -5,9 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathFinder"
         mc:Ignorable="d"
-        Title="Path Finder" Height="600" Width="900">
-    <Grid>
-        <Canvas x:Name="Canvas" Background="White" MouseLeftButtonDown="Canvas_LeftMouseDown" MouseRightButtonDown="Canvas_MouseRightButtonDown" />
+        Title="Path Finder" d:DesignHeight="600" d:DesignWidth="900">
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Canvas Background="#F0F0F0" x:Name="Canvas" MouseLeftButtonDown="Canvas_LeftMouseDown"
+                MouseRightButtonDown="Canvas_MouseRightButtonDown" Grid.ColumnSpan="2" />
+       
+        <StackPanel Margin="8,8,0,0" Grid.Row="1" Orientation="Horizontal">
+            <Button Padding="5" x:Name="StartPoint" Content="Set StartPoint" Click="StartPoint_Click"/>
+            <Button Margin="8,0" Padding="5" x:Name="EndPoint" Content="Set EndPoint" Click="EndPoint_Click" />
+        </StackPanel>
+
 
     </Grid>
 </Window>
