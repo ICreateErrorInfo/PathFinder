@@ -13,11 +13,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Canvas Background="#F0F0F0" x:Name="Canvas" MouseLeftButtonDown="Canvas_LeftMouseDown"
-                MouseRightButtonDown="Canvas_MouseRightButtonDown" Grid.ColumnSpan="2" />
+                 Grid.ColumnSpan="2" />
        
         <StackPanel Margin="8,8,0,0" Grid.Row="1" Orientation="Horizontal">
-            <Button Padding="5" x:Name="StartPoint" Content="Set StartPoint" Click="StartPoint_Click"/>
-            <Button Margin="8,0" Padding="5" x:Name="EndPoint" Content="Set EndPoint" Click="EndPoint_Click" />
+            <Button Padding="5" x:Name="StartPointButton" Content="Set StartPoint" Click="StartPoint_Click"/>
+            <Button Margin="8,0" Padding="5" x:Name="EndPointButton" Content="Set EndPoint" Click="EndPoint_Click" />
         </StackPanel>
 
 

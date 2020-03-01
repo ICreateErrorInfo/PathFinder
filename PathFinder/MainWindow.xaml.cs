@@ -17,22 +17,22 @@ namespace PathFinder {
             InitializeComponent();
         }
 
+        // ReSharper disable once CollectionNeverQueried.Local
         readonly List<Point> _points = new List<Point>();
-        private Point EndPoint;
-        private Point StartPoint;
+        private  Ellipse     _endPoint;
+        private  Ellipse     _startPoint;
 
         private void Canvas_LeftMouseDown(object sender, MouseButtonEventArgs e) {
 
-            var pt = e.GetPosition(Canvas);
+            var          pt       = e.GetPosition(Canvas);
             const double diameter = 10;
-
 
             var c = new Ellipse {
                 Width  = diameter,
                 Height = diameter,
-                Fill   = Brushes.Black,
             };
 
+            ResetColor(c);
 
             c.MouseLeftButtonDown += (o, buttonEventArgs) => {
                 var me = (Ellipse) o;
@@ -55,13 +55,9 @@ namespace PathFinder {
                 var me = (Ellipse) o;
 
                 if (_e1 == null) {
-
-                    _e1      = me;
-                    _e1.Fill = Brushes.Blue;
-
+                    SetSelection(me);
                 } else if (me == _e1) {
-                    _e1.Fill = Brushes.Black;
-                    _e1      = null;
+                    UnSelect();
                 } else {
 
                     var p1 = new Point(Canvas.GetLeft(_e1) + diameter / 2, Canvas.GetTop(_e1) + diameter / 2);
@@ -77,8 +73,7 @@ namespace PathFinder {
                     };
                     Canvas.Children.Add(l);
 
-                    _e1.Fill = Brushes.Black;
-                    _e1      = null;
+                    UnSelect();
                 }
 
             };
@@ -87,15 +82,75 @@ namespace PathFinder {
 
         Ellipse _e1;
 
-        private void EndPoint_Click(object sender, RoutedEventArgs e)
-        {
+        private void EndPoint_Click(object sender, RoutedEventArgs e) {
+            if (_e1 != null) {
+                SetEndPoint(_e1);
+                UnSelect();
+            }
+        }
+
+        private void StartPoint_Click(object sender, RoutedEventArgs e) {
+            if (_e1 != null) {
+                SetStartPoint(_e1);
+                UnSelect();
+            }
+        }
+
+        void UnSelect() {
+            SetSelection(null);
+        }
+
+        void SetStartPoint(Ellipse startPoint) {
+
+            var prevStartPoint = _startPoint;
+            _startPoint = startPoint;
+
+            if (prevStartPoint != null) {
+                ResetColor(prevStartPoint);
+            }
+
+            if (startPoint != null) {
+                ResetColor(startPoint);
+            }
+        }
+
+        void SetEndPoint(Ellipse endPoint) {
+
+            var prevEndPoint = _endPoint;
+            _endPoint = endPoint;
+
+            if (prevEndPoint != null) {
+                ResetColor(prevEndPoint);
+            }
+
+            if (endPoint != null) {
+                ResetColor(endPoint);
+            }
+        }
+
+        void ResetColor(Ellipse e) {
+            if (e == _startPoint) {
+                e.Fill = Brushes.Green;
+            } else if (e == _endPoint) {
+                e.Fill = Brushes.Orange;
+            } else {
+                e.Fill = Brushes.Black;
+            }
+        }
+
+        void SetSelection(Ellipse e) {
+            if (_e1 != null) {
+                ResetColor(_e1);
+                _e1 = null;
+            }
+
+            if (e != null) {
+                e.Fill = Brushes.Blue;
+                _e1    = e;
+            }
 
         }
 
-        private void StartPoint_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 
 }
